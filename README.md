@@ -1,2 +1,1 @@
-# Mod Name
-Your description
+# Better Multishot

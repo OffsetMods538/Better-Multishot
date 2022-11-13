@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.offsetmonkey538.bettermultishot.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "AnvilScreenHandlerMixin",
+    "enchantment.EnchantmentMixin",
+    "enchantment.MultishotEnchantmentMixin",
+    "item.BowItemMixin",
+    "item.CrossbowItemMixin",
+    "item.throwable.EggItemMixin",
+    "item.throwable.EnderPearlItemMixin",
+    "item.throwable.ExperienceBottleItemMixin",
+    "item.throwable.SnowballItemMixin",
+    "item.throwable.ThrowablePotionItemMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
