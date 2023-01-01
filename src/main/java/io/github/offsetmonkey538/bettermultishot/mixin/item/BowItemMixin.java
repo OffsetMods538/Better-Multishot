@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import static net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+
 @Mixin(
         value = BowItem.class,
         // Higher priority means it's applied later.
@@ -84,6 +86,7 @@ public abstract class BowItemMixin {
             arrow.copyFrom(arrowEntity);
             if (BetterMultishotConfig.NERF_BOW_MULTISHOT.get()) arrow.setDamage(arrow.getDamage() / 2);
             arrow.setUuid(MathHelper.randomUuid(world.getRandom()));
+            arrow.pickupType = CREATIVE_ONLY;
 
             float simulated = -10.0f + j * 20.0f / numArrows;
             arrow.setVelocity(
