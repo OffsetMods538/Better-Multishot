@@ -23,10 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
         priority = 2000
 )
 public abstract class EggItemMixin implements IMultishotThrowableItem {
-    @Unique private Entity bettermultishot$cachedShooter;
-    @Unique private float bettermultishot$cachedPitch;
-    @Unique private float bettermultishot$cachedYaw;
-    @Unique private float bettermultishot$cachedRoll;
     @Unique private float bettermultishot$cachedSpeed;
     @Unique private float bettermultishot$cachedDivergence;
 
@@ -38,11 +34,7 @@ public abstract class EggItemMixin implements IMultishotThrowableItem {
             )
     )
     private Entity bettermultishot$captureSetVelocityArgs(Entity shooter, float pitch, float yaw, float roll, float speed, float divergence) {
-        bettermultishot$cachedShooter    = shooter;
-        bettermultishot$cachedPitch      = pitch;
-        bettermultishot$cachedYaw        = yaw;
-        bettermultishot$cachedRoll       = roll;
-        bettermultishot$cachedSpeed      = speed;
+        bettermultishot$cachedSpeed = speed;
         bettermultishot$cachedDivergence = divergence;
 
         return shooter;
@@ -63,10 +55,6 @@ public abstract class EggItemMixin implements IMultishotThrowableItem {
                 hand,
                 projectileEntity,
                 EggEntity::new,
-                bettermultishot$cachedShooter,
-                bettermultishot$cachedPitch,
-                bettermultishot$cachedYaw,
-                bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
         );
