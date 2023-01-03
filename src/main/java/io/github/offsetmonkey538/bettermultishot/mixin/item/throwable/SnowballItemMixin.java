@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
         priority = 2000
 )
 public abstract class SnowballItemMixin implements IMultishotThrowableItem {
+    @Unique private float bettermultishot$cachedRoll;
     @Unique private float bettermultishot$cachedSpeed;
     @Unique private float bettermultishot$cachedDivergence;
 
@@ -34,6 +35,7 @@ public abstract class SnowballItemMixin implements IMultishotThrowableItem {
             )
     )
     private Entity bettermultishot$captureSetVelocityArgs(Entity shooter, float pitch, float yaw, float roll, float speed, float divergence) {
+        bettermultishot$cachedRoll = roll;
         bettermultishot$cachedSpeed = speed;
         bettermultishot$cachedDivergence = divergence;
 
@@ -55,6 +57,7 @@ public abstract class SnowballItemMixin implements IMultishotThrowableItem {
                 hand,
                 projectileEntity,
                 SnowballEntity::new,
+                bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
         );

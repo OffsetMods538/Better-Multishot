@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
 
 public interface IMultishotThrowableItem {
 
-    default void throwProjectiles(World world, PlayerEntity player, Hand hand, ThrownItemEntity originalProjectileEntity, BiFunction<World, PlayerEntity, ThrownItemEntity> thrownItemConstructor, float speed, float divergence) {
+    default void throwProjectiles(World world, PlayerEntity player, Hand hand, ThrownItemEntity originalProjectileEntity, BiFunction<World, PlayerEntity, ThrownItemEntity> thrownItemConstructor, float roll, float speed, float divergence) {
         ItemStack projectileItem = player.getStackInHand(hand);
         int multishotLevel = EnchantmentHelper.getLevel(Enchantments.MULTISHOT, projectileItem);
         int numProjectiles = 1 + (2 * multishotLevel);
@@ -34,7 +34,13 @@ public interface IMultishotThrowableItem {
             Vec3d vec3d2 = player.getRotationVec(1.0f);
             Vec3f vec3f = new Vec3f(vec3d2);
             vec3f.rotate(quaternion);
-            projectile.setVelocity(vec3f.getX(), vec3f.getY(), vec3f.getZ(), speed, divergence);
+
+            // Copied from bukkit forum (https://bukkit.org/threads/how-do-i-get-yaw-and-pitch-from-a-vector.50317/)
+            double distance = Math.sqrt(vec3f.getZ() * vec3f.getZ() + vec3f.getX() * vec3f.getX());
+            float pitch = (float) -Math.toDegrees(Math.atan2(vec3f.getY(), distance));
+            float yaw = (float) -Math.toDegrees(Math.atan2(vec3f.getX(), vec3f.getZ()));
+
+            projectile.setVelocity(player, pitch, yaw, roll, speed, divergence);
 
             world.spawnEntity(projectile);
         }
