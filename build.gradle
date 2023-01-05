@@ -2,7 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.0-SNAPSHOT'
 }
 
-version = project.mod_version
+version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
 
 repositories {
@@ -43,6 +43,9 @@ dependencies {
 
 	// Paragon config library
 	include modImplementation("maven.modrinth:paragon:${paragon_version}")
+
+	// Jankson
+	include implementation("blue.endless:jankson:${jankson_version}")
 }
 
 processResources {
