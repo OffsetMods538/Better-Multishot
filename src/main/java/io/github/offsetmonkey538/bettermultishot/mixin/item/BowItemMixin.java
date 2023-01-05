@@ -11,10 +11,10 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -82,13 +82,13 @@ public abstract class BowItemMixin {
             arrow.pickupType = CREATIVE_ONLY;
 
             float simulated = -10.0f + j * 20.0f / numArrows;
+
             // Copied from CrossbowItem
             Vec3d vec3d = player.getOppositeRotationVector(1.0f);
-            Quaternion quaternion = new Quaternion(new Vec3f(vec3d), simulated, true);
+            Quaternionf quaternionf = new Quaternionf().setAngleAxis(simulated * ((float)Math.PI / 180), vec3d.x, vec3d.y, vec3d.z);
             Vec3d vec3d2 = player.getRotationVec(1.0f);
-            Vec3f vec3f = new Vec3f(vec3d2);
-            vec3f.rotate(quaternion);
-            arrow.setVelocity(vec3f.getX(), vec3f.getY(), vec3f.getZ(), bettermultishot$cachedSpeed, bettermultishot$cachedDivergence);
+            Vector3f vector3f = vec3d2.toVector3f().rotate(quaternionf);
+            arrow.setVelocity(vector3f.x(), vector3f.y(), vector3f.z(), bettermultishot$cachedSpeed, bettermultishot$cachedDivergence);
 
             world.spawnEntity(arrow);
         }
