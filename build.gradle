@@ -43,6 +43,9 @@ dependencies {
 
 	// Paragon config library
 	include modImplementation("maven.modrinth:paragon:${paragon_version}")
+
+	// Jankson
+	include implementation("blue.endless:jankson:${jankson_version}")
 }
 
 processResources {

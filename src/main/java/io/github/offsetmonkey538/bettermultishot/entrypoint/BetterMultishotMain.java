@@ -1,6 +1,6 @@
 package io.github.offsetmonkey538.bettermultishot.entrypoint;
 
-import com.kyanite.paragon.api.ConfigRegistry;
+import com.kyanite.paragon.api.ConfigManager;
 import io.github.offsetmonkey538.bettermultishot.config.BetterMultishotConfig;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -12,6 +12,6 @@ public class BetterMultishotMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ConfigRegistry.register(new BetterMultishotConfig());
+		ConfigManager.register(MOD_ID, new BetterMultishotConfig());
 	}
 }
