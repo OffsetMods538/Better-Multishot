@@ -1,7 +1,7 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.enchantment;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import io.github.offsetmonkey538.bettermultishot.item.IMultishotThrowableItem;
+import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.MultishotEnchantment;
 import net.minecraft.item.BowItem;
@@ -19,6 +19,6 @@ public abstract class EnchantmentMixin {
     @SuppressWarnings({"ConstantConditions", "unused"})
     public boolean bettermultishot$makeBowsAndThrowableIItemsAcceptableItemsForMultishot(boolean original, ItemStack item) {
         return original ||
-                ((Object)this instanceof MultishotEnchantment && (item.getItem() instanceof IMultishotThrowableItem || item.getItem() instanceof BowItem));
+                ((Object)this instanceof MultishotEnchantment && (item.getItem() instanceof IMultishotItem || item.getItem() instanceof BowItem));
     }
 }
