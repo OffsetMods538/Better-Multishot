@@ -1,6 +1,6 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.item.throwable;
 
-import io.github.offsetmonkey538.bettermultishot.item.IMultishotThrowableItem;
+import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
         // Higher priority means it's applied later.
         priority = 2000
 )
-public abstract class ThrowablePotionItemMixin implements IMultishotThrowableItem {
+public abstract class ThrowablePotionItemMixin implements IMultishotItem<PotionEntity> {
     @Unique private float bettermultishot$cachedRoll;
     @Unique private float bettermultishot$cachedSpeed;
     @Unique private float bettermultishot$cachedDivergence;
@@ -51,7 +51,7 @@ public abstract class ThrowablePotionItemMixin implements IMultishotThrowableIte
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     public void bettermultishot$useMultishot(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, ItemStack projectile, PotionEntity projectileEntity) {
-        this.throwProjectiles(
+        this.generateProjectiles(
                 world,
                 user,
                 hand,
@@ -60,6 +60,6 @@ public abstract class ThrowablePotionItemMixin implements IMultishotThrowableIte
                 bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
-        );
+        ).forEach(world::spawnEntity);
     }
 }

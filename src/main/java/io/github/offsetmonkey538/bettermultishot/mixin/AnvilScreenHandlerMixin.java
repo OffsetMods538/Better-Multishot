@@ -2,7 +2,7 @@ package io.github.offsetmonkey538.bettermultishot.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import io.github.offsetmonkey538.bettermultishot.item.IMultishotThrowableItem;
+import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.AnvilScreenHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +27,7 @@ public abstract class AnvilScreenHandlerMixin {
             )
     )
     private int bettermultishot$ignoreMultishotThrowableItems(ItemStack instance, Operation<Integer> original) {
-        if (instance.getItem() instanceof IMultishotThrowableItem) return 0;
+        if (instance.getItem() instanceof IMultishotItem) return 0;
         return original.call(instance);
     }
 }
