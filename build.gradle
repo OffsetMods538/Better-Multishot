@@ -34,8 +34,6 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Mixin Extras
 	include implementation("com.github.LlamaLad7:MixinExtras:${project.mixinextras_version}")
@@ -43,6 +41,8 @@ dependencies {
 
 	// Paragon config library
 	include modImplementation("maven.modrinth:paragon:${paragon_version}")
+	// A module from Fabric API needed for Paragon
+	include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
 
 	// Jankson
 	include implementation("blue.endless:jankson:${jankson_version}")

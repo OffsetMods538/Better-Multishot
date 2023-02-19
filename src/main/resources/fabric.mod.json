@@ -27,9 +27,6 @@
   "mixins": [
     "${id}.mixins.json"
   ],
-  "depends": {
-    "fabric-api": "*"
-  },
   "custom": {
     "modmanager": {
       "modrinth": "${modrinthProject}"
