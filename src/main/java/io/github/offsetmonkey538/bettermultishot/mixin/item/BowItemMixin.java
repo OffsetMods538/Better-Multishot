@@ -54,7 +54,7 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    public void bettermultishot$useMultishot(
+    private void bettermultishot$useMultishot(
             ItemStack bow,
             World world,
             LivingEntity user,

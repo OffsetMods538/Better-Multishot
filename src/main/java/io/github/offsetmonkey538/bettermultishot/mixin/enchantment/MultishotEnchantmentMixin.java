@@ -12,7 +12,8 @@ public abstract class MultishotEnchantmentMixin {
             method = "getMinPower",
             at = @At("RETURN")
     )
-    public int bettermultishot$changeMinPower(@SuppressWarnings("unused") int original, int level) {
+    @SuppressWarnings("unused")
+    private int bettermultishot$changeMinPower(int original, int level) {
         return 10 + (5 * level);
     }
 
@@ -20,7 +21,8 @@ public abstract class MultishotEnchantmentMixin {
             method = "getMaxLevel",
             at = @At("RETURN")
     )
-    public int bettermultishot$changeMaxLevel(@SuppressWarnings("unused") int original) {
+    @SuppressWarnings("unused")
+    private int bettermultishot$changeMaxLevel(int original) {
         return 3;
     }
 }

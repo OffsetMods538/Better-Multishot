@@ -15,8 +15,8 @@ public abstract class EnchantmentMixin {
             method = "isAcceptableItem",
             at = @At("RETURN")
     )
-    @SuppressWarnings("ConstantConditions")
-    public boolean bettermultishot$makeBowsAndThrowableIItemsAcceptableItemsForMultishot(boolean original, ItemStack item) {
+    @SuppressWarnings({"ConstantConditions", "unused"})
+    private boolean bettermultishot$makeBowsAndThrowableIItemsAcceptableItemsForMultishot(boolean original, ItemStack item) {
         return original || ((Object)this instanceof MultishotEnchantment && item.getItem() instanceof IMultishotItem);
     }
 }

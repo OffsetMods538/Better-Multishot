@@ -1,21 +1,17 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.item.throwable;
 
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ThrowablePotionItem;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(
         value = ThrowablePotionItem.class,
@@ -42,24 +38,25 @@ public abstract class ThrowablePotionItemMixin implements IMultishotItem<PotionE
         return shooter;
     }
 
-    @Inject(
+    @ModifyReceiver(
             method = "use",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"
-            ),
-            locals = LocalCapture.CAPTURE_FAILHARD
+            )
     )
-    public void bettermultishot$useMultishot(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, ItemStack projectile, PotionEntity projectileEntity) {
+    @SuppressWarnings("unused")
+    private World bettermultishot$useMultishot(World world, Entity potion, World world1, PlayerEntity user, Hand hand) {
         this.generateProjectiles(
                 world,
                 user,
                 hand,
-                projectileEntity,
+                (PotionEntity) potion,
                 PotionEntity::new,
                 bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
         ).forEach(world::spawnEntity);
+        return world;
     }
 }
