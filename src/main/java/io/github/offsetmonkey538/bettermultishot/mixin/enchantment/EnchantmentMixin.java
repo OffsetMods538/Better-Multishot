@@ -19,4 +19,14 @@ public abstract class EnchantmentMixin {
     private boolean bettermultishot$makeBowsAndThrowableIItemsAcceptableItemsForMultishot(boolean original, ItemStack item) {
         return original || ((Object)this instanceof MultishotEnchantment && item.getItem() instanceof IMultishotItem);
     }
+
+    @ModifyReturnValue(
+            method = "getMaxLevel",
+            at = @At("RETURN")
+    )
+    @SuppressWarnings({"ConstantConditions", "unused"})
+    private int bettermultishot$ChangeMaxLevelOfCrossbow(int original) {
+        if ((Object) this instanceof MultishotEnchantment) return 3;
+        return original;
+    }
 }
