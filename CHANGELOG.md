@@ -1,2 +1,3 @@
 # Changelog
-Tridents can't be enchanted with multishot and riptide at the same time because that doesn't work.
+Switched to custom config library, old config files won't work.
+Updated to 1.20.1
