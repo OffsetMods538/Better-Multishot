@@ -1,15 +1,16 @@
 package io.github.offsetmonkey538.bettermultishot.config;
 
-import com.kyanite.paragon.api.ConfigOption;
-import com.kyanite.paragon.api.interfaces.Config;
-import com.kyanite.paragon.api.interfaces.serializers.ConfigSerializer;
-import com.kyanite.paragon.api.interfaces.serializers.JSON5Serializer;
+import top.offsetmonkey538.monkeyconfig538.Config;
+import top.offsetmonkey538.monkeyconfig538.annotation.ConfigEntry;
 
-public class BetterMultishotConfig implements Config {
-    public static final ConfigOption<Boolean> NERF_BOW_MULTISHOT = new ConfigOption<>("nerf bow multishot", true);
+import static io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain.*;
+
+public class BetterMultishotConfig extends Config {
+    @ConfigEntry("Set to true if you want multishot arrows from bows to do half the damage. Set to false if now. Default is true.")
+    public static boolean nerfBowMultishot = true;
 
     @Override
-    public ConfigSerializer getSerializer() {
-        return JSON5Serializer.builder(this).useDefaultJsonSuffix().build();
+    protected String getName() {
+        return MOD_ID;
     }
 }

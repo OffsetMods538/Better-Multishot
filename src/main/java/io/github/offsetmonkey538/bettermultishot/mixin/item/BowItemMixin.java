@@ -79,7 +79,7 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
         ).forEach((arrow) -> {
-            if (BetterMultishotConfig.NERF_BOW_MULTISHOT.get()) arrow.setDamage(arrow.getDamage() / 2);
+            if (BetterMultishotConfig.nerfBowMultishot) arrow.setDamage(arrow.getDamage() / 2);
             arrow.pickupType = CREATIVE_ONLY;
             world.spawnEntity(arrow);
         });

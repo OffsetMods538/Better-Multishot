@@ -16,14 +16,7 @@ repositories {
 		url = "https://jitpack.io"
 		content {
 			includeGroup "com.github.LlamaLad7"
-		}
-	}
-
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-		content {
-			includeGroup "maven.modrinth"
+			includeGroup "top.offsetmonkey538"
 		}
 	}
 }
@@ -39,13 +32,8 @@ dependencies {
 	include implementation("com.github.LlamaLad7:MixinExtras:${project.mixinextras_version}")
 	annotationProcessor "com.github.LlamaLad7:MixinExtras:${project.mixinextras_version}"
 
-	// Paragon config library
-	include modImplementation("maven.modrinth:paragon:${paragon_version}")
-	// A module from Fabric API needed for Paragon
-	include modImplementation(fabricApi.module("fabric-networking-api-v1", project.fabric_version))
-
-	// Jankson
-	include implementation("blue.endless:jankson:${jankson_version}")
+	// Config library
+	include modImplementation("top.offsetmonkey538:MonkeyConfig538:${project.offsetconfig538_version}")
 }
 
 processResources {
