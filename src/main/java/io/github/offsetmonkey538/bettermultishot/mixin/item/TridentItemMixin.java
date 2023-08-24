@@ -1,6 +1,7 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.item;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
+import io.github.offsetmonkey538.bettermultishot.access.TridentEntityAccess;
 import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -60,6 +61,7 @@ public abstract class TridentItemMixin implements IMultishotItem<TridentEntity> 
                 bettermultishot$cachedDivergence
         ).forEach((entity) -> {
             entity.pickupType = CREATIVE_ONLY;
+            ((TridentEntityAccess) entity).bettermultishot$setFromMultishot(true);
             world.spawnEntity(entity);
         });
         return world;
