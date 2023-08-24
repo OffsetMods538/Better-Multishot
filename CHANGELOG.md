@@ -1,3 +1,2 @@
 # Changelog
-Switched to custom config library, old config files won't work.
-Updated to 1.20.1
+Update project to new [template](https://github.com/OffsetMods538/Minecraft-Mod-Template).
