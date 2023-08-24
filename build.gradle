@@ -46,19 +46,19 @@ dependencies {
 	includeImplementation annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")
 
 	// Config library
-	includeModImplementation "top.offsetmonkey538:MonkeyConfig538:${project.monkeyconfig538_version}"
+	includeModImplementation "top.offsetmonkey538:monkeyconfig538:${project.monkeyconfig538_version}"
 }
 
 processResources {
 	inputs.properties(Map.of(
-			"version",                    project.mod_version,
+			"mod_version",                project.mod_version,
 			"monkeyconfig538_version",    project.monkeyconfig538_version,
 			"supportedMinecraftVersions", project.supported_minecraft_versions
 	))
 
 	filesMatching("fabric.mod.json") {
 		expand(Map.of(
-				"version",                    project.mod_version,
+				"mod_version",                project.mod_version,
 				"monkeyconfig538_version",    project.monkeyconfig538_version,
 				"supportedMinecraftVersions", project.supported_minecraft_versions
 		))
@@ -97,6 +97,6 @@ modrinth {
 	}
 
 	dependencies {
-		embedded.project "monkeyconfig538"
+		embedded.version("monkeyconfig538", project.monkeyconfig538_version)
 	}
 }
