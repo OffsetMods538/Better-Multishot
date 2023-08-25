@@ -1,16 +1,31 @@
 plugins {
 	id 'fabric-loom' version '1.3-SNAPSHOT'
+	id 'io.github.dexman545.outlet' version '1.5.1'
+	id 'com.modrinth.minotaur' version '2.+'
 }
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+archivesBaseName = "bettermultishot"
 version = "${project.mod_version}+${project.minecraft_version}"
-group = project.maven_group
+outlet.mcVersionRange = project.supported_minecraft_versions
+
+
+configurations {
+	includeModImplementation
+
+	include.extendsFrom           includeModImplementation
+	modImplementation.extendsFrom includeModImplementation
+
+
+	includeImplementation
+
+	include.extendsFrom        includeImplementation
+	implementation.extendsFrom includeImplementation
+}
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
 	maven {
 		name = "JitPack"
 		url = "https://jitpack.io"
@@ -22,42 +37,31 @@ repositories {
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	mappings "net.fabricmc:yarn:${outlet.yarnVersion(project.minecraft_version)}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${outlet.loaderVersion()}"
 
 
 	// Mixin Extras
-	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")))
+	includeImplementation annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")
 
 	// Config library
-	include modImplementation("top.offsetmonkey538:MonkeyConfig538:${project.offsetconfig538_version}")
+	includeModImplementation "top.offsetmonkey538:monkeyconfig538:${project.monkeyconfig538_version}"
 }
 
 processResources {
-	inputs.property "id", project.mod_id
-	inputs.property "version", project.mod_version
-	inputs.property "name", project.mod_name
-	inputs.property "pascalName", pascalCase(project.mod_name)
-	inputs.property "description", project.mod_description
-	inputs.property "sources", project.mod_sources
-	inputs.property "license", project.mod_license
-	inputs.property "group", project.maven_group
-	inputs.property "modrinthProject", project.modrinth_project
+	inputs.properties(Map.of(
+			"mod_version",                project.mod_version,
+			"monkeyconfig538_version",    project.monkeyconfig538_version,
+			"supportedMinecraftVersions", project.supported_minecraft_versions
+	))
 
 	filesMatching("fabric.mod.json") {
-		expand(
-				id: project.mod_id,
-				version: project.mod_version,
-				name: project.mod_name,
-				pascalName: pascalCase(project.mod_name),
-				description: project.mod_description,
-				sources: project.mod_sources,
-				license: project.mod_license,
-				group: project.maven_group,
-				modrinthProject: project.modrinth_project
-		)
+		expand(Map.of(
+				"mod_version",                project.mod_version,
+				"monkeyconfig538_version",    project.monkeyconfig538_version,
+				"supportedMinecraftVersions", project.supported_minecraft_versions
+		))
 	}
 }
 
@@ -67,9 +71,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 }
 
@@ -79,11 +80,23 @@ jar {
 	}
 }
 
-static def pascalCase(String text) {
-	String[] words = text.split("[\\W_]+")
-	StringBuilder builder = new StringBuilder()
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = "bettermultishot"
+	def customVersionName = System.getenv("VERSION_NAME")
+	if (customVersionName != null) versionName = customVersionName
+	versionNumber = "${project.version}"
+	versionType = "beta"
+	uploadFile = remapJar.archiveFile
+	additionalFiles = [sourcesJar.archiveFile]
+	gameVersions = outlet.mcVersions()
+	syncBodyFrom = rootProject.file("README.md").text
+	def changelogFile = rootProject.file("CHANGELOG.md")
+	if (changelogFile.exists()) {
+		changelog = changelogFile.text
+	}
 
-	for (String word : words) builder.append(word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)).toString() + word.substring(1).toLowerCase())
-
-	return builder.toString()
+	dependencies {
+		embedded.version("monkeyconfig538", project.monkeyconfig538_version)
+	}
 }

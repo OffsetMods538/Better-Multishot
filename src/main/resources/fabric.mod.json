@@ -1,35 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "${id}",
-  "version": "${version}",
-
-  "name": "${name}",
-  "description": "${description}",
+  "id": "bettermultishot",
+  "version": "${mod_version}",
+  "name": "Better Multishot",
+  "description": "Makes multishot better",
   "authors": [
     "OffsetMonkey538"
   ],
   "contact": {
-    "sources": "${sources}"
+    "sources": "https://github.com/OffsetMods538/Better-Multishot"
   },
-
-  "license": "${license}",
-  "icon": "assets/${id}/icon.png",
-
+  "license": "MIT",
+  "icon": "assets/bettermultishot/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "${group}.entrypoint.${pascalName}Main"
+      "io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain"
     ],
     "preLaunch": [
       "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ]
   },
   "mixins": [
-    "${id}.mixins.json"
+    "bettermultishot.mixins.json"
   ],
-  "custom": {
-    "modmanager": {
-      "modrinth": "${modrinthProject}"
-    }
+  "depends": {
+    "monkeyconfig538": ">=${monkeyconfig538_version}",
+    "minecraft": "${supportedMinecraftVersions}"
   }
 }
