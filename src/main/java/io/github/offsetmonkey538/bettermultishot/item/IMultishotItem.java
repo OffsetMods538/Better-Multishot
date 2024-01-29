@@ -29,11 +29,10 @@ public interface IMultishotItem<T extends ProjectileEntity> {
             projectile.copyFrom(originalProjectile);
             projectile.setUuid(MathHelper.randomUuid(world.getRandom()));
 
-            float simulated = -10.0f + i * 20.0f / numProjectiles;
+            float projectileRotationDegrees = -10.0f + i * 20.0f / numProjectiles;
 
-            // Copied from CrossbowItem
             Vec3d vec3d = player.getOppositeRotationVector(1.0F);
-            Quaternionf quaternionf = (new Quaternionf()).setAngleAxis(simulated * 0.017453292F, vec3d.x, vec3d.y, vec3d.z);
+            Quaternionf quaternionf = new Quaternionf().setAngleAxis(Math.toRadians(projectileRotationDegrees), vec3d.x, vec3d.y, vec3d.z);
             Vec3d vec3d2 = player.getRotationVec(1.0F);
             Vector3f vector3f = vec3d2.toVector3f().rotate(quaternionf);
 
