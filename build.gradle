@@ -1,6 +1,6 @@
 plugins {
 	id 'fabric-loom' version '1.5-SNAPSHOT'
-	id 'io.github.dexman545.outlet' version '1.5.1'
+	id 'io.github.dexman545.outlet' version '1.6.1'
 	id 'com.modrinth.minotaur' version '2.+'
 }
 
@@ -9,8 +9,31 @@ targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = "bettermultishot"
 version = "${project.mod_version}+${project.minecraft_version}"
-outlet.mcVersionRange = project.supported_minecraft_versions
 
+outlet {
+	maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
+	mcVersionRange = project.supported_minecraft_versions
+	propertiesData = [
+	        'yarn_version': outlet.yarnVersion(project.minecraft_version),
+			'loader_version': outlet.loaderVersion()
+	]
+}
+
+
+loom {
+	runs {
+		server {
+			runDir "run/server"
+		}
+	}
+}
+
+// https://gist.github.com/maityyy/3dbcd558d58a6412c3a2a38c72706e8e
+afterEvaluate {
+	loom.runs.configureEach {
+		vmArg "-javaagent:${configurations.compileClasspath.find{ it.name.contains("sponge-mixin") }}"
+	}
+}
 
 configurations {
 	includeModImplementation
@@ -30,7 +53,6 @@ repositories {
 		name = "JitPack"
 		url = "https://jitpack.io"
 		content {
-			includeGroup "com.github.llamalad7.mixinextras"
 			includeGroup "top.offsetmonkey538"
 		}
 	}
@@ -39,13 +61,10 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${outlet.yarnVersion(project.minecraft_version)}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${outlet.loaderVersion()}"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 
-	// Mixin Extras
-	includeImplementation annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")
-
-	// Config library
+	// Config library TODO: change to the new one
 	includeModImplementation "top.offsetmonkey538:monkeyconfig538:${project.monkeyconfig538_version}"
 }
 
@@ -100,3 +119,5 @@ modrinth {
 		embedded.version("monkeyconfig538", project.monkeyconfig538_version)
 	}
 }
+
+tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
