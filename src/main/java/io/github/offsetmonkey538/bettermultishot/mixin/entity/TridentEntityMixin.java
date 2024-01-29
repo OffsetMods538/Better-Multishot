@@ -19,19 +19,18 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class TridentEntityMixin extends PersistentProjectileEntity implements TridentEntityAccess {
     @Shadow @Final private static TrackedData<Byte> LOYALTY;
 
-    @Shadow private ItemStack tridentStack;
-
-    protected TridentEntityMixin(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world);
+    protected TridentEntityMixin(EntityType<? extends PersistentProjectileEntity> type, World world, ItemStack stack) {
+        super(type, world, stack);
     }
+
 
     @Override
     public void bettermultishot$fromMultishot() {
         this.dataTracker.set(LOYALTY, (byte) 0);
 
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(tridentStack);
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(getItemStack());
         enchantments.remove(Enchantments.LOYALTY);
 
-        EnchantmentHelper.set(enchantments, tridentStack);
+        EnchantmentHelper.set(enchantments, getItemStack());
     }
 }

@@ -71,7 +71,7 @@ dependencies {
 processResources {
 	inputs.properties(Map.of(
 			"mod_version",                project.mod_version,
-			"monkeylib538_version",    project.monkeylib538_version,
+			"monkeylib538_version",       project.monkeylib538_version,
 			"supportedMinecraftVersions", project.supported_minecraft_versions
 	))
 
