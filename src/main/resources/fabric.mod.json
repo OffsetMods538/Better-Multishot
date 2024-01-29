@@ -25,7 +25,7 @@
     "bettermultishot.mixins.json"
   ],
   "depends": {
-    "monkeyconfig538": ">=${monkeyconfig538_version}",
+    "monkeylib538": ">=${monkeylib538_version}",
     "minecraft": "${supportedMinecraftVersions}"
   }
 }

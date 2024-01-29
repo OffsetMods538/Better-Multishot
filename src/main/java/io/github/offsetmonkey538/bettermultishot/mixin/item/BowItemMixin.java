@@ -1,6 +1,5 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.item;
 
-import io.github.offsetmonkey538.bettermultishot.config.BetterMultishotConfig;
 import io.github.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain.*;
+import static io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain.config;
 import static net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
 
 @Mixin(
@@ -80,7 +79,7 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
                 bettermultishot$cachedSpeed,
                 bettermultishot$cachedDivergence
         ).forEach((arrow) -> {
-            if (config().nerfBowMultishot) arrow.setDamage(arrow.getDamage() / 2);
+            if (config.nerfBowMultishot) arrow.setDamage(arrow.getDamage() / 2);
             arrow.pickupType = CREATIVE_ONLY;
             world.spawnEntity(arrow);
         });

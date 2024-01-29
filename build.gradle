@@ -64,21 +64,21 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 
-	// Config library TODO: change to the new one
-	includeModImplementation "top.offsetmonkey538:monkeyconfig538:${project.monkeyconfig538_version}"
+	// Config library
+	modImplementation "top.offsetmonkey538:monkeylib538:${project.monkeylib538_version}"
 }
 
 processResources {
 	inputs.properties(Map.of(
 			"mod_version",                project.mod_version,
-			"monkeyconfig538_version",    project.monkeyconfig538_version,
+			"monkeylib538_version",    project.monkeylib538_version,
 			"supportedMinecraftVersions", project.supported_minecraft_versions
 	))
 
 	filesMatching("fabric.mod.json") {
 		expand(Map.of(
 				"mod_version",                project.mod_version,
-				"monkeyconfig538_version",    project.monkeyconfig538_version,
+				"monkeylib538_version",    project.monkeylib538_version,
 				"supportedMinecraftVersions", project.supported_minecraft_versions
 		))
 	}
@@ -116,7 +116,7 @@ modrinth {
 	}
 
 	dependencies {
-		embedded.version("monkeyconfig538", project.monkeyconfig538_version)
+		embedded.version("monkeylib538", project.monkeylib538_version)
 	}
 }
 
