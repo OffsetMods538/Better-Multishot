@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
 
+import static io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain.config;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
@@ -34,6 +36,7 @@ public abstract class LivingEntityMixin {
         final Entity sourceEntity = source.getSource();
         if (!(sourceEntity instanceof ProjectileEntity)) return original;
         if (!((ProjectileEntityAccess) sourceEntity).bettermultishot$isFromMultishot()) return original;
+        if (!config.bypassHitCooldown) return original;
         return true;
     }
 }
