@@ -1,5 +1,9 @@
 package io.github.offsetmonkey538.bettermultishot.mixin.item;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import io.github.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
@@ -79,5 +83,18 @@ public abstract class CrossbowItemMixin {
                 shoot(world, shooter, hand, crossbow, projectileStack, getSoundPitch(shooter.getRandom().nextBoolean(), shooter.getRandom()), bl, speed, divergence, simulated);
             }
         }
+    }
+
+    @WrapOperation(
+            method = "shoot",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"
+            )
+    )
+    private static boolean bettermultishot$markProjectilesFromMultishot(World instance, Entity entity, Operation<Boolean> original, World world, LivingEntity shooter, Hand hand, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean creative, float speed, float divergence, float simulated) {
+        if (simulated != 0.0f) ((ProjectileEntityAccess) entity).bettermultishot$setFromMultishot(true);
+
+        return original.call(instance, entity);
     }
 }

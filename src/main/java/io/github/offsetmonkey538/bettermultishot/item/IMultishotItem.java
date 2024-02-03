@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.bettermultishot.item;
 
+import io.github.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +29,7 @@ public interface IMultishotItem<T extends ProjectileEntity> {
             T projectile = projectileConstructor.apply(world, player);
             projectile.copyFrom(originalProjectile);
             projectile.setUuid(MathHelper.randomUuid(world.getRandom()));
+            ((ProjectileEntityAccess) projectile).bettermultishot$setFromMultishot(true);
 
             float projectileRotationDegrees = -10.0f + i * 20.0f / numProjectiles;
 
