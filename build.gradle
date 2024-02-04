@@ -116,7 +116,7 @@ modrinth {
 	}
 
 	dependencies {
-		embedded.version("monkeylib538", project.monkeylib538_version)
+		required.version("monkeylib538", project.monkeylib538_version)
 	}
 }
 
