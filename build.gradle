@@ -50,10 +50,10 @@ configurations {
 
 repositories {
 	maven {
-		name = "JitPack"
-		url = "https://jitpack.io"
+		name = "OffsetMods538"
+		url = "https://maven.offsetmonkey538.top/releases"
 		content {
-			includeGroup "top.offsetmonkey538"
+			includeGroup "top.offsetmonkey538.monkeylib538"
 		}
 	}
 }
@@ -65,7 +65,7 @@ dependencies {
 
 
 	// Config library
-	modImplementation "top.offsetmonkey538:monkeylib538:${project.monkeylib538_version}"
+	modImplementation "top.offsetmonkey538.monkeylib538:monkeylib538:${project.monkeylib538_version}"
 }
 
 processResources {
