@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+import static io.github.offsetmonkey538.bettermultishot.entrypoint.BetterMultishotMain.config;
+
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
 
@@ -26,7 +28,7 @@ public abstract class EnchantmentMixin {
     )
     @SuppressWarnings({"ConstantConditions", "unused"})
     private int bettermultishot$ChangeMaxLevelOfCrossbow(int original) {
-        if ((Object) this instanceof MultishotEnchantment) return 3;
+        if ((Object) this instanceof MultishotEnchantment) return config.maxMultishotLevel;
         return original;
     }
 }
