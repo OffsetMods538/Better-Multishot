@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "bettermultishot",
+  "version": "${modVersion}",
+  "name": "Better Multishot",
+  "description": "Makes multishot better",
+  "authors": [
+    "OffsetMonkey538"
+  ],
+  "contact": {
+    "sources": "https://github.com/OffsetMods538/Better-Multishot"
+  },
+  "license": "MIT",
+  "icon": "assets/bettermultishot/icon.png",
+  "environment": "*",
+  "mixins": [
+    "bettermultishot.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "${supportedMinecraftVersions}"
+  }
+}

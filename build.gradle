@@ -1,0 +1,159 @@
+plugins {
+    id "fabric-loom" version "1.6-SNAPSHOT" apply false
+    id "io.github.dexman545.outlet" version "1.6.1"
+    id "com.modrinth.minotaur" version "2.+" apply false
+    id "java"
+}
+
+outlet {
+    maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
+    mcVersionRange = "*"
+    propertiesData = [
+            "loader_version": outlet.loaderVersion()
+    ]
+}
+
+subprojects {
+    apply plugin: "fabric-loom"
+
+    configurations {
+        includeApi
+
+        include.extendsFrom includeApi
+        api.extendsFrom     includeApi
+    }
+
+    repositories {
+        maven {
+            name = "OffsetMods538"
+            url = "https://maven.offsetmonkey538.top/releases"
+            content {
+                includeGroup "top.offsetmonkey538.monkeylib538"
+            }
+        }
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${project.minecraft_version}"
+        mappings "net.fabricmc:yarn:${project.yarn_version}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+
+        modImplementation "top.offsetmonkey538.monkeylib538:monkeylib538:${project.monkeylib538_version}"
+    }
+
+    processResources {
+        inputs.properties(Map.of(
+                "modVersion",                 rootProject.mod_version,
+                "supportedMinecraftVersions", project.supported_minecraft_versions,
+                "monkeylib538_version",       project.monkeylib538_version
+        ))
+
+        filesMatching("fabric.mod.json") {
+            expand(Map.of(
+                    "modVersion",                 rootProject.mod_version,
+                    "supportedMinecraftVersions", project.supported_minecraft_versions,
+                    "monkeylib538_version",       project.monkeylib538_version
+            ))
+        }
+
+        exclude ".cache/**"
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    jar {
+        from("${rootProject.projectDir}/LICENSE") {
+            rename { "${it}_${project.archivesBaseName}"}
+        }
+    }
+}
+
+configure(subprojects.findAll {it.name == "common"}) {
+    version = rootProject.mod_version
+}
+
+configure(subprojects.findAll {it.name != "common"}) {
+    apply plugin: "com.modrinth.minotaur"
+
+    base {
+        archivesName = "better-multishot"
+    }
+    version = "${rootProject.mod_version}+${project.minecraft_version}"
+    outlet {
+        mcVersionRange = project.supported_minecraft_versions
+        allowSnapshotsForProject = false
+    }
+
+    loom {
+        splitEnvironmentSourceSets()
+
+        mods {
+            bettermultishot {
+                sourceSet sourceSets.main
+                sourceSet sourceSets.client
+            }
+        }
+
+        runs {
+            client {
+                client()
+                name = "${project.name} Client"
+                runDir "run"
+            }
+
+            server {
+                server()
+                name = "${project.name} Server"
+                runDir "run/server"
+            }
+        }
+    }
+
+    // https://gist.github.com/maityyy/3dbcd558d58a6412c3a2a38c72706e8e
+    afterEvaluate {
+        loom.runs.configureEach {
+            vmArg "-javaagent:${configurations.compileClasspath.find{ it.name.contains("sponge-mixin") }}"
+        }
+    }
+
+    configurations {
+        common {
+            canBeResolved = true
+            canBeConsumed = false
+        }
+        api.extendsFrom common
+    }
+
+    dependencies {
+        common project(path: ":common", configuration: "namedElements")
+        include project(":common")
+    }
+
+    modrinth {
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = "better-multishot"
+        def customVersionName = System.getenv("VERSION_NAME")
+        if (customVersionName != null) versionName = customVersionName
+        versionNumber = "${project.version}"
+        versionType = "release"
+        uploadFile = remapJar.archiveFile
+        additionalFiles = [sourcesJar.archiveFile]
+        gameVersions = outlet.mcVersions()
+        syncBodyFrom = rootProject.file("README.md").text
+
+        dependencies {
+            required.project "monkeylib538"
+        }
+    }
+
+    tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
+}
