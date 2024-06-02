@@ -11,5 +11,6 @@ pluginManagement {
 
 include "common"
 
+include "1.20.2"
 include "1.20.4"
-include "1.20.5"
+include "1.20.6"

@@ -1,19 +1,23 @@
 package top.offsetmonkey538.bettermultishot;
 
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.offsetmonkey538.bettermultishot.config.ModConfig;
+import top.offsetmonkey538.monkeylib538.config.ConfigManager;
 
 import java.util.ServiceLoader;
 
-public class BetterMultishot implements ModInitializer {
+public class BetterMultishot implements PreLaunchEntrypoint {
 	public static final String MOD_ID = "bettermultishot";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	public static ModConfig config;
+
 
 	@Override
-	public void onInitialize() {
-
+	public void onPreLaunch() {
+		config = ConfigManager.init(new ModConfig(), LOGGER::error);
 	}
 
 	public static <T> T load(Class<T> clazz) {

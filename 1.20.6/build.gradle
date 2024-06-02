@@ -1,0 +1,15 @@
+loom {
+    runs {
+        client {
+            client()
+            name = "${project.name} Client"
+            runDir "run"
+        }
+
+        server {
+            server()
+            name = "${project.name} Server"
+            runDir "run/server"
+        }
+    }
+}

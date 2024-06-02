@@ -1,8 +1,17 @@
 {
 	"required": true,
-	"package": "io.github.offsetmonkey538.bettermultishot.mixin",
+	"package": "top.offsetmonkey538.bettermultishot.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"entity.LivingEntityMixin",
+		"item.ItemMixin",
+		"item.ProjectileEntityMixin",
+		"item.TridentItemMixin",
+		"item.throwable.EggItemMixin",
+		"item.throwable.EnderPearlItemMixin",
+		"item.throwable.ExperienceBottleItemMixin",
+		"item.throwable.SnowballItemMixin",
+		"item.throwable.ThrowablePotionItemMixin"
 	],
 	"client": [
 	],

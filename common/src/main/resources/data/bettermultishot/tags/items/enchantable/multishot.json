@@ -1,0 +1,12 @@
+{
+	"values": [
+		"#minecraft:enchantable/crossbow",
+		"minecraft:bow",
+		"minecraft:trident",
+		"minecraft:egg",
+		"minecraft:ender_pearl",
+		"minecraft:experience_bottle",
+		"minecraft:snowball",
+		"minecraft:potion"
+	]
+}

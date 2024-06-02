@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "bettermultishot-common",
+  "id": "bettermultishot",
   "version": "${modVersion}",
   "name": "Better Multishot",
   "description": "Makes multishot better",
@@ -13,15 +13,10 @@
   "license": "MIT",
   "icon": "assets/bettermultishot/icon.png",
   "environment": "*",
-  "entrypoints": {
-    "preLaunch": [
-      "top.offsetmonkey538.bettermultishot.BetterMultishot"
-    ]
-  },
   "mixins": [
-    "bettermultishot-common.mixins.json"
+    "bettermultishot.mixins.json"
   ],
   "depends": {
-    "monkeylib538": "${monkeylib538_version}"
+    "minecraft": "${supportedMinecraftVersions}"
   }
 }
