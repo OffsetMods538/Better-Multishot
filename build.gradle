@@ -141,7 +141,7 @@ configure(subprojects.findAll {it.name != "common"}) {
 
     modrinth {
         token = System.getenv("MODRINTH_TOKEN")
-        projectId = "better-multishot"
+        projectId = "bettermultishot"
         def customVersionName = System.getenv("VERSION_NAME")
         if (customVersionName != null) versionName = customVersionName
         versionNumber = "${project.version}"
