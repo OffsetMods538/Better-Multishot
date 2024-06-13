@@ -1,8 +1,6 @@
 package top.offsetmonkey538.bettermultishot.item;
 
 import top.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BowItem;
@@ -11,6 +9,8 @@ import net.minecraft.item.TridentItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import top.offsetmonkey538.monkeylib538.utils.EnchantmentUtils;
+import top.offsetmonkey538.monkeylib538.utils.IdentifierUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public interface IMultishotItem<T extends ProjectileEntity> {
 
         List<T> projectiles = new ArrayList<>();
         ItemStack itemInHand = player.getStackInHand(hand);
-        int multishotLevel = EnchantmentHelper.getLevel(Enchantments.MULTISHOT, itemInHand);
+        int multishotLevel = EnchantmentUtils.INSTANCE.getLevel("multishot", world, itemInHand);
         int numProjectiles = 1 + (config.arrowsPerLevel * multishotLevel);
 
         for (int i = 1; i < numProjectiles; i++) {

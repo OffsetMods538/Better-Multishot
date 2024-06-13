@@ -24,6 +24,7 @@ subprojects {
     }
 
     repositories {
+        mavenLocal()
         maven {
             name = "OffsetMods538"
             url = "https://maven.offsetmonkey538.top/releases"
@@ -152,6 +153,7 @@ configure(subprojects.findAll {it.name != "common"}) {
 
         dependencies {
             required.project "monkeylib538"
+            required.project "fabric-api"
         }
     }
 

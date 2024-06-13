@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 
-import static top.offsetmonkey538.monkeylib538.MonkeyLib538.id;
+import static top.offsetmonkey538.bettermultishot.BetterMultishot.id;
 
 public final class ModItemTags {
     private ModItemTags() {

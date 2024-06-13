@@ -10,8 +10,8 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,17 +38,16 @@ public abstract class RangedWeaponItemMixin {
             method = "shootAll",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"
+                    target = "Lnet/minecraft/server/world/ServerWorld;spawnEntity(Lnet/minecraft/entity/Entity;)Z"
             )
     )
     private boolean bettermultishot$modifyProjectileVelocity(
-            World instance, Entity entity, Operation<Boolean> original,
-
-            World world,
+            ServerWorld instance, Entity entity, Operation<Boolean> original,
+            ServerWorld world,
             LivingEntity shooter,
             Hand hand,
-            ItemStack crossbow,
-            List<ItemStack> list,
+            ItemStack stack,
+            List<ItemStack> projectiles,
             float speed,
             float divergence,
             boolean critical,
@@ -63,8 +62,10 @@ public abstract class RangedWeaponItemMixin {
 
         if (projectile instanceof PersistentProjectileEntity persistent) persistent.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
         ((ProjectileEntityAccess) projectile).bettermultishot$setFromMultishot(true);
+
+
         projectile = config.shootingPattern.newProjectile(
-                list.size(),
+                projectiles.size(),
                 projectileIndex,
                 player,
                 projectile,

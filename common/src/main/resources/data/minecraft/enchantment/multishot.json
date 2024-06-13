@@ -1,0 +1,23 @@
+{
+	"anvil_cost": 4,
+	"description": {
+		"translate": "enchantment.minecraft.multishot"
+	},
+	"effects": {
+	},
+	"exclusive_set": "#bettermultishot:exclusive_set/multishot",
+	"max_cost": {
+		"base": 50,
+		"per_level_above_first": 10
+	},
+	"max_level": 3,
+	"min_cost": {
+		"base": 20,
+		"per_level_above_first": 5
+	},
+	"slots": [
+		"mainhand"
+	],
+	"supported_items": "#bettermultishot:enchantable/multishot",
+	"weight": 2
+}

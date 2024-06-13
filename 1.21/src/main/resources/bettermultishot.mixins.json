@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "top.offsetmonkey538.bettermultishot.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"AnvilScreenHandlerMixin",
+		"entity.TridentEntityMixin",
+		"item.RangedWeaponItemMixin"
+	],
+	"client": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
