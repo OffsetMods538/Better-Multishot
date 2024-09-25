@@ -55,14 +55,14 @@ public abstract class RangedWeaponItemMixin {
             @Local int projectileIndex
     ) {
         if (!(entity instanceof ProjectileEntity projectile)) return false;
-        if (!(shooter instanceof PlayerEntity player)) return false;
+        if (!(shooter instanceof PlayerEntity player)) return original.call(instance, entity);
 
         if (projectileIndex <= 0) return original.call(instance, entity);
 
 
         if (projectile instanceof PersistentProjectileEntity persistent) persistent.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
         ((ProjectileEntityAccess) projectile).bettermultishot$setFromMultishot(true);
-
+        if (projectile instanceof PersistentProjectileEntity arrow && config.nerfBowMultishot) arrow.setDamage(arrow.getDamage() / 2);
 
         projectile = config.shootingPattern.newProjectile(
                 projectiles.size(),
