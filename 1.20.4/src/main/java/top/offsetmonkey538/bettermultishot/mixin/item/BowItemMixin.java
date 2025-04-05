@@ -1,5 +1,6 @@
 package top.offsetmonkey538.bettermultishot.mixin.item;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import top.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static top.offsetmonkey538.bettermultishot.BetterMultishot.config;
 import static net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
@@ -51,8 +51,7 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"
-            ),
-            locals = LocalCapture.CAPTURE_FAILHARD
+            )
     )
     private void bettermultishot$useMultishot(
             ItemStack bow,
@@ -60,14 +59,10 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
             LivingEntity user,
             int remainingUseTicks,
             CallbackInfo ci,
-            PlayerEntity player,
-            boolean bl,
-            ItemStack arrowType,
-            int i,
-            float f,
-            boolean bl2,
-            ArrowItem arrowItem,
-            PersistentProjectileEntity originalArrow
+            @Local PlayerEntity player,
+            @Local(ordinal = 1) ItemStack arrowType,
+            @Local ArrowItem arrowItem,
+            @Local PersistentProjectileEntity originalArrow
     ) {
         this.generateProjectiles(
                 world,

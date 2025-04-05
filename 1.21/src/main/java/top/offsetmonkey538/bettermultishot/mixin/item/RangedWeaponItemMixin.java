@@ -8,7 +8,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.server.world.ServerWorld;
@@ -20,11 +19,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import top.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
 import top.offsetmonkey538.monkeylib538.utils.EnchantmentUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import static top.offsetmonkey538.bettermultishot.BetterMultishot.LOGGER;
 import static top.offsetmonkey538.bettermultishot.BetterMultishot.config;
 
 @Mixin(RangedWeaponItem.class)
