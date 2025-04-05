@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.server.world.ServerWorld;
@@ -19,8 +20,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import top.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
 import top.offsetmonkey538.monkeylib538.utils.EnchantmentUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import static top.offsetmonkey538.bettermultishot.BetterMultishot.LOGGER;
 import static top.offsetmonkey538.bettermultishot.BetterMultishot.config;
 
 @Mixin(RangedWeaponItem.class)
@@ -31,6 +35,8 @@ public abstract class RangedWeaponItemMixin {
             ordinal = 0
     )
     private static int bettermultishot$setProjectileAmount(int value, @Local(ordinal = 0, argsOnly = true) ItemStack weapon, @Local(ordinal = 0, argsOnly = true) LivingEntity shooter) {
+        if (config.isDisabled(weapon)) return value;
+        // TODO: Should probably add to original value instead of 1 for compat with other mods?
         return 1 + (config.arrowsPerLevel * EnchantmentUtils.INSTANCE.getLevel("multishot", shooter.getWorld(), weapon));
     }
 
@@ -56,13 +62,16 @@ public abstract class RangedWeaponItemMixin {
     ) {
         if (!(entity instanceof ProjectileEntity projectile)) return original.call(instance, entity);
         if (!(shooter instanceof PlayerEntity player)) return original.call(instance, entity);
+        if (config.isDisabled(stack)) return original.call(instance, entity);
 
         if (projectileIndex <= 0) return original.call(instance, entity);
 
 
-        if (projectile instanceof PersistentProjectileEntity persistent) persistent.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+        if (projectile instanceof PersistentProjectileEntity persistent)
+            persistent.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
         ((ProjectileEntityAccess) projectile).bettermultishot$setFromMultishot(true);
-        if (projectile instanceof PersistentProjectileEntity arrow && config.nerfBowMultishot) arrow.setDamage(arrow.getDamage() / 2);
+        if (projectile instanceof PersistentProjectileEntity arrow && config.nerfBowMultishot)
+            arrow.setDamage(arrow.getDamage() / 2);
 
         projectile = config.shootingPattern.newProjectile(
                 projectiles.size(),

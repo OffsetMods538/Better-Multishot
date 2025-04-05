@@ -74,6 +74,7 @@ public abstract class BowItemMixin implements IMultishotItem<ArrowEntity> {
                 player,
                 player.getActiveHand(),
                 (ArrowEntity) originalArrow,
+                bow,
                 ((world1, playerEntity) -> (ArrowEntity) arrowItem.createArrow(world1, arrowType, playerEntity)),
                 bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,

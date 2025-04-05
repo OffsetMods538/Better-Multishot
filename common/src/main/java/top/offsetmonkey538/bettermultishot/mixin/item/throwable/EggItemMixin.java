@@ -1,6 +1,8 @@
 package top.offsetmonkey538.bettermultishot.mixin.item.throwable;
 
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.item.ItemStack;
 import top.offsetmonkey538.bettermultishot.item.IMultishotItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,12 +48,13 @@ public abstract class EggItemMixin implements IMultishotItem<EggEntity> {
             )
     )
     @SuppressWarnings("unused")
-    private World bettermultishot$useMultishot(World world, Entity egg, World world1, PlayerEntity player, Hand hand) {
+    private World bettermultishot$useMultishot(World world, Entity egg, World world1, PlayerEntity player, Hand hand, @Local ItemStack item) {
         this.generateProjectiles(
                 world,
                 player,
                 hand,
                 (EggEntity) egg,
+                item,
                 EggEntity::new,
                 bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,

@@ -55,6 +55,7 @@ public abstract class TridentItemMixin implements IMultishotItem<TridentEntity> 
                 (PlayerEntity) user,
                 user.getActiveHand(),
                 (TridentEntity) originalTrident,
+                stack,
                 ((world2, playerEntity) -> new TridentEntity(world2, playerEntity, stack)),
                 bettermultishot$cachedRoll,
                 bettermultishot$cachedSpeed,

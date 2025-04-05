@@ -3,14 +3,11 @@ package top.offsetmonkey538.bettermultishot.item;
 import top.offsetmonkey538.bettermultishot.access.ProjectileEntityAccess;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import top.offsetmonkey538.monkeylib538.utils.EnchantmentUtils;
-import top.offsetmonkey538.monkeylib538.utils.IdentifierUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +17,10 @@ import static top.offsetmonkey538.bettermultishot.BetterMultishot.config;
 
 public interface IMultishotItem<T extends ProjectileEntity> {
 
-    default List<T> generateProjectiles(World world, PlayerEntity player, Hand hand, T originalProjectile, BiFunction<World, PlayerEntity, T> projectileConstructor, float roll, float speed, float divergence) {
-        // FIXME: make work with new config: if (this instanceof BowItem && config.disableBowMultishot) return new ArrayList<>(0);
-        // FIXME: make work with new config: if (this instanceof TridentItem && config.disableTridentMultishot) return new ArrayList<>(0);
-        // FIXME: make work with new config: if (config.disableThrowablesMultishot) return new ArrayList<>(0);
+    default List<T> generateProjectiles(World world, PlayerEntity player, Hand hand, T originalProjectile, ItemStack thisStack, BiFunction<World, PlayerEntity, T> projectileConstructor, float roll, float speed, float divergence) {
+        System.out.println(thisStack.getTranslationKey());
+        if (config.isDisabled(thisStack)) return new ArrayList<>(0);
+
 
         List<T> projectiles = new ArrayList<>();
         ItemStack itemInHand = player.getStackInHand(hand);
