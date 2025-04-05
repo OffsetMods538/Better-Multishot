@@ -17,6 +17,7 @@
     "bettermultishot.mixins.json"
   ],
   "depends": {
-    "minecraft": "${supportedMinecraftVersions}"
+    "minecraft": "${supportedMinecraftVersions}",
+    "fabric_api": "*"
   }
 }

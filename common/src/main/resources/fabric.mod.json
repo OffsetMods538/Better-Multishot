@@ -22,6 +22,7 @@
     "bettermultishot-common.mixins.json"
   ],
   "depends": {
-    "monkeylib538": ">=${monkeylib538_version}"
+    "monkeylib538": ">=${monkeylib538_version}",
+    "fabric_api": "*"
   }
 }

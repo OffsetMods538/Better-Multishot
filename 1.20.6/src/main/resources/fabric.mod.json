@@ -18,6 +18,6 @@
   ],
   "depends": {
     "minecraft": "${supportedMinecraftVersions}",
-    "fabric-resource-loader-v0": "*"
+    "fabric_api": "*"
   }
 }
