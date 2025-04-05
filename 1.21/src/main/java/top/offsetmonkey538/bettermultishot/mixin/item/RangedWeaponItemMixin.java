@@ -54,7 +54,7 @@ public abstract class RangedWeaponItemMixin {
             @Nullable LivingEntity target,
             @Local int projectileIndex
     ) {
-        if (!(entity instanceof ProjectileEntity projectile)) return false;
+        if (!(entity instanceof ProjectileEntity projectile)) return original.call(instance, entity);
         if (!(shooter instanceof PlayerEntity player)) return original.call(instance, entity);
 
         if (projectileIndex <= 0) return original.call(instance, entity);
