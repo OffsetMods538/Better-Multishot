@@ -21,9 +21,9 @@ import static top.offsetmonkey538.bettermultishot.BetterMultishot.config;
 public interface IMultishotItem<T extends ProjectileEntity> {
 
     default List<T> generateProjectiles(World world, PlayerEntity player, Hand hand, T originalProjectile, BiFunction<World, PlayerEntity, T> projectileConstructor, float roll, float speed, float divergence) {
-        if (this instanceof BowItem && config.disableBowMultishot) return new ArrayList<>(0);
-        if (this instanceof TridentItem && config.disableTridentMultishot) return new ArrayList<>(0);
-        if (config.disableThrowablesMultishot) return new ArrayList<>(0);
+        // FIXME: make work with new config: if (this instanceof BowItem && config.disableBowMultishot) return new ArrayList<>(0);
+        // FIXME: make work with new config: if (this instanceof TridentItem && config.disableTridentMultishot) return new ArrayList<>(0);
+        // FIXME: make work with new config: if (config.disableThrowablesMultishot) return new ArrayList<>(0);
 
         List<T> projectiles = new ArrayList<>();
         ItemStack itemInHand = player.getStackInHand(hand);
