@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "1.7-SNAPSHOT" apply false
+    id "fabric-loom" version "1.10-SNAPSHOT" apply false
     id "io.github.dexman545.outlet" version "1.6.1"
     id "com.modrinth.minotaur" version "2.+" apply false
     id "java"
